@@ -1,6 +1,6 @@
 ---
-- hosts: all
-  gather_facts: no
+- hosts: initial
+  gather_facts: yes
   become: yes
   tasks:
     - name: 'install packages'
@@ -55,6 +55,20 @@
         - 9000-9999/udp
         - 30000-32767/udp
         - 1936/tcp
+        - 3306/tcp
+        - 4567/tcp
+        - 4568/tcp
+        - 4444/tcp
+        - 4567/udp
+
+    - name: 'set hostname'
+      ansible.builtin.hostname:
+        name: "{{ item.hostname }}"
+      loop:
+        - { host: '172.22.22.5', hostname: 'k3s1' }
+        - { host: '172.22.22.6', hostname: 'k3s2' }
+        - { host: '172.22.22.7', hostname: 'k3s3' }
+      when: ansible_host == item.host
     - name: 'open services web'
       firewalld:
         service: "{{ item }}"
@@ -74,4 +88,19 @@
         - ah
         - esp
         - 112
+    - name: 'create interface'
+      nmcli:
+        type: vlan
+        conn_name: k3s
+        ifname: ens32.1
+        vlandev: ens32
+        vlanid: 1
+        ip4: "{{ item.ipv4 }}"
+        autoconnect: true
+        state: present
+      loop:
+        - { host: '172.22.22.5', ipv4: 172.20.254.1/24 }
+        - { host: '172.22.22.6', ipv4: 172.20.254.2/24 }
+        - { host: '172.22.22.7', ipv4: 172.20.254.3/24 }
+      when: ansible_host == item.host
 
