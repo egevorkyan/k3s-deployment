@@ -9,8 +9,8 @@
       ansible.builtin.include_role:
         name: prerequisites
         tasks_from: inventory-generator
-        vars:
-          infodata: "{{ lookup('env','DEMO') }}"
+      vars:
+        infodata: "{{ lookup('env','DEMO') }}"
         apply:
           tags:
             - init
