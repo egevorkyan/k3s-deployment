@@ -2,13 +2,13 @@ all:
   children:
     initial:
       hosts:
-      {% for items in infodata %}
-        {{ items.node_name }}:
+  {% for items in infodata %}
+    {{ items.node_name }}:
           ansible_user: k3s1
-          ansible_host: {{ items.node_name }}
+          ansible_host: {{ items.node_ip }}
           ansible_python_interpreter: /usr/bin/python3
           k3s_control_node: true
-      {% endfor %}
+  {% endfor %}
 #        k3s1:
 #          ansible_user: k3s1
 #          ansible_host: 172.22.22.5
