@@ -11,6 +11,5 @@
         tasks_from: inventory-generator
       vars:
         infodata: "{{ lookup('env','DEMO') }}"
-        apply:
-          tags:
-            - init
+      tags:
+        - init
