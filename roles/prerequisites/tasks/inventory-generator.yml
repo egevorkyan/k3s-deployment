@@ -1,0 +1,23 @@
+---
+#Generates all necessary variables to run project
+
+- name: 'generate initial inventory'
+  ansible.builtin.template:
+    src: init-inventory.yml.j2
+    dest: ../../../init-inventory.yml
+  tags:
+    - init
+
+- name: 'generate keepalived inventory'
+  ansible.builtin.template:
+    src: keepalived-inventory.yml.j2
+    dest: ../../../keepalived-inventory.yml
+  tags:
+    - keepalived
+
+- name: 'generate k3s inventory'
+  ansible.builtin.template:
+    src: k3scluster-inventory.yml.j2
+    dest: ../../../k3scluster-inventory.yml
+  tags:
+    - k3scluster

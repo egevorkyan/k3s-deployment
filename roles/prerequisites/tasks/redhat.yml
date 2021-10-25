@@ -1,0 +1,37 @@
+---
+- name: 'set hostname'
+  ansible.builtin.hostname:
+    name: "{{ node_name }}"
+
+- name: 'install packages'
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ packages_redhat }}"
+
+- name: 'open firewalld ports'
+  firewalld:
+    port: "{{ item.port }}"
+    permanent: yes
+    immediate: yes
+    state: "{{ item.state }}"
+  loop: "{{ firewall_port_list }}"
+
+- name: 'open firewalld rich rules'
+  firewalld:
+    rich_rule: "rule protocol value={{ item.proto }} accept"
+    permanent: yes
+    immediate: yes
+    state: "{{ item.state }}"
+  loop: "{{ firewall_rich_rules }}"
+
+- name: 'create interface'
+  nmcli:
+    type: vlan
+    conn_name: k3s
+    ifname: "{{ ansible_default_ipv4.interface }}.1"
+    vlandev: "{{ ansible_default_ipv4.interface }}"
+    vlanid: 1
+    ip4: "{{ internal_network_start | ansible.netcommon.ipmath(node_id) }}/{{ internal_cidr }}"
+    autoconnect: true
+    state: present

@@ -4,7 +4,7 @@
 # MariaDB setting
 
 # Define mariadb version
-mariadb_version: "10.5"
+mariadb_version: "{{ mariadb_version }}"
 
 # Defines if we should enable the MariaDB repo or use version within OS repos.
 galera_enable_mariadb_repo: true
@@ -97,7 +97,7 @@ galera_reconfigure_galera: true
 
 # Define interface in which to bind
 # ex. eth0|eth1|enp0s3|enp0s8
-galera_cluster_bind_interface: "ens32.1"
+galera_cluster_bind_interface: "{{ ansible_default_ipv4.interface }}.1"
 
 # Define bind address for galera cluster
 galera_cluster_bind_address: "{{ hostvars[inventory_hostname]['ansible_' + galera_cluster_bind_interface]['ipv4']['address'] }}"
@@ -266,20 +266,20 @@ mariadb_real_cpus: "{{ ansible_processor_count * ansible_processor_cores }}"
 # Create these MariaDB databases during installation
 # Example:
 mariadb_databases:
-  - name: k3sdemo
+  - name: "{{ mariadb_dbname }}"
 #   - name: keystone
 #   - name: mydb
 #     init_script: files/init_mydb.sql
 #mariadb_databases: []
 
 mariadb_mysql_users:
-  - name: admin
+  - name: "{{ mariadb_user }}"
     hosts:
       - "%"
       - "127.0.0.1"
       - "::1"
       - "localhost"
-    password: "Cisco2013"
+    password: "{{ mariadb_password }}"
     priv: "*.*:ALL"
     encrypted: no
     state: present
@@ -313,7 +313,7 @@ galera_monitor_script_path: "/etc/mysql"
 galera_mysql_first_node: "{{ groups[galera_cluster_nodes_group][0] }}"
 
 # Define the primary domain name of your environment
-mariadb_pri_domain_name: "example.org"
+mariadb_pri_domain_name: "{{ mariadb_pri_domain }}"
 
 # Define smtp domain for email
 mariadb_smtp_domain_name: "{{ mariadb_pri_domain_name }}"

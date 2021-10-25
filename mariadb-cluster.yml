@@ -1,9 +1,9 @@
 ---
-- name: 'MariaDB cluster deployment'
+- name: 'mariadb cluster deployment'
   hosts: k3s_cluster
   vars_files:
-    - "vars.yml"
+    - vars/mariadb_vars.yml
   tasks:
-    - name: 'Deployment'
+    - name: 'deployment process'
       include_role:
         name: eradical.ansible_mariadb_galera_cluster

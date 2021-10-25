@@ -1,0 +1,30 @@
+keepalived__nonlocal_bind: true
+keepalived__routers:
+{% for host in groups.proxy %}
+  - name: vrrp_{{loop.index}}
+    check_script:
+      - name: chk_haproxy
+        script: 'killall -0 haproxy'
+        interval: 2
+        weight: 2
+        fall: 1
+        rise: 1
+    vip_int: "{{ ansible_default_ipv4.interface }}.1"
+    master_node: k3s1
+    router_pri_master: 150
+    router_pri_backup: 100
+    advert_int: 1
+    nopreempt: true
+    auth_pass: {{ keep_pass }}
+    use_unicast: true
+    unicast_src_ip: {{ hostvars[host].ansible_host }}
+    unicast_peers:
+    {% for host in groups.proxy %}
+    {% if {{ hostvars[host].ansible_host }} != {{ internal_network_start | ansible.netcommon.ipmath(loop.index) }} %}
+      - {{ hostvars[host].ansible_host }}
+    {% endif %}
+    {% endfor %}
+    router_id: 50
+    vip_addresses:
+      - {{ internal_vip }}
+{% endfor %}

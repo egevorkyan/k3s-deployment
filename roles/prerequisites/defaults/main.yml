@@ -1,0 +1,52 @@
+internal_network_start: 172.254.254.5/24
+internal_cidr: 24
+internal_vip: 172.254.254.250
+packages_redhat:
+  - git
+  - vim
+  - net-tools
+  - telnet
+  - firewalld
+
+firewall_port_list:
+  - { port: 6443/tcp, state: enabled }
+  - { port: 8443/tcp, state: enabled }
+  - { port: 8091/tcp, state: enabled }
+  - { port: 8090/tcp, state: enabled }
+  - { port: 80/tcp, state: enabled }
+  - { port: 443/tcp, state: enabled }
+  - { port: 53/tcp, state: enabled }
+  - { port: 2376/tcp, state: enabled }
+  - { port: 2379-2380/tcp, state: enabled }
+  - { port: 6641-6642/tcp, state: enabled }
+  - { port: 9000-9999/tcp, state: enabled }
+  - { port: 10250/tcp, state: enabled }
+  - { port: 10254/tcp, state: enabled }
+  - { port: 10257/tcp, state: enabled }
+  - { port: 10255/tcp, state: enabled }
+  - { port: 10252/tcp, state: enabled }
+  - { port: 10259/tcp, state: enabled }
+  - { port: 22623/tcp, state: enabled }
+  - { port: 30000-32767/tcp, state: enabled }
+  - { port: 1936/tcp, state: enabled }
+  - { port: 3306/tcp, state: enabled }
+  - { port: 4567/tcp, state: enabled }
+  - { port: 4568/tcp, state: enabled }
+  - { port: 4444/tcp, state: enabled }
+  - { port: 53/udp, state: enabled }
+  - { port: 500/udp, state: enabled }
+  - { port: 8472/udp, state: enabled }
+  - { port: 4500/udp, state: enabled }
+  - { port: 4789/udp, state: enabled }
+  - { port: 5353/udp, state: enabled }
+  - { port: 6081/udp, state: enabled }
+  - { port: 8472/udp, state: enabled }
+  - { port: 9000-9999/udp, state: enabled }
+  - { port: 30000-32767/udp, state: enabled }
+  - { port: 4567/udp, state: enabled }
+
+firewall_rich_rules:
+  - { proto: ah, state: enabled }
+  - { proto: esp, state: enabled }
+  - { proto: 112, state: enabled }
+

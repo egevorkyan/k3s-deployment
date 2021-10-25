@@ -1,0 +1,5 @@
+#Managed by Ansible
+127.0.0.1 localhost
+{% for host in groups.initial %}
+{{ hostvars[host].node_name }} {{ internal_network_start | ansible.netcommon.ipmath(hostvars[host].node_id) }}
+{% endfor %}
