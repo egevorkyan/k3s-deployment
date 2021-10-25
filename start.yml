@@ -4,12 +4,14 @@
   hosts: localhost
   connection: local
   gather_facts: no
+  tags: init
   tasks:
     - name: 'initial inventory'
       ansible.builtin.include_role:
         name: prerequisites
         tasks_from: inventory-generator
       vars:
+        init: true
         infodata: "{{ lookup('env','DEMO') }}"
       tags:
         - init
