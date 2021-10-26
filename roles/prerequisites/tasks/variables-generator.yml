@@ -3,13 +3,13 @@
 - name: 'keepalived variables generator'
   ansible.builtin.template:
     src: keepalived_vars.yml.j2
-    dest: ../../../vars/keepalived_vars.yml
+    dest: vars/keepalived_vars.yml
   tags:
     - keepalived
 
 - name: 'k3s variables generator'
   ansible.builtin.template:
     src: k3s_variables.yml.j2
-    dest: ../../../vars/k3s_variables.yml
+    dest: vars/k3s_variables.yml
   tags:
     - k3scluster

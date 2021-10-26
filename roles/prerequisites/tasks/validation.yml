@@ -1,0 +1,8 @@
+---
+
+- name: 'check interface exists'
+  set_fact:
+    nic_exist: true
+  when: hostvars[inventory_hostname]['ansible_{{item}}'] == {{ ansible_default_ipv4.interface }}.1
+  loop:
+    - "{{ ansible_interfaces }}"

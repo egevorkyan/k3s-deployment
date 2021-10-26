@@ -9,7 +9,7 @@ keepalived__routers:
         weight: 2
         fall: 1
         rise: 1
-    vip_int: "{{ ansible_default_ipv4.interface }}.1"
+    vip_int: {{ hostvars[host].interface }}
     master_node: k3s1
     router_pri_master: 150
     router_pri_backup: 100

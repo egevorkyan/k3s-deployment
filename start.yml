@@ -1,12 +1,11 @@
 ---
 
-- name: 'generate initial inventory'
+- name: 'generate initial and k3scluster inventory'
   hosts: localhost
   connection: local
   gather_facts: no
-  tags: init
   tasks:
-    - name: 'initial inventory'
+    - name: 'initial and k3scluster inventory'
       ansible.builtin.include_role:
         name: prerequisites
         tasks_from: inventory-generator
@@ -15,3 +14,47 @@
         infodata: "{{ lookup('env','DEMO') }}"
       tags:
         - init
+        - k3scluster
+
+
+- name: 'deploy prerequisites'
+  hosts: initial
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: 'deploy prerequisites'
+      ansible.builtin.include_role:
+        name: prerequisites
+      tags:
+        - prereq-deploy
+
+- name: 'generate keepalived inventory'
+  hosts: initial
+  become: no
+  gather_facts: yes
+  tasks:
+    - name: 'keepalived inventory'
+      ansible.builtin.include_role:
+        name: prerequisites
+        tasks_from: inventory-generator
+      vars:
+        init: true
+        infodata: "{{ lookup('env','DEMO') }}"
+      delegate_to: localhost
+      tags:
+        - keepalived
+
+- name: 'generate keepalived variables'
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: 'keepalived variables'
+      ansible.builtin.include_role:
+        name: prerequisites
+        tasks_from: variables-generator
+      vars:
+        init: true
+        infodata: "{{ lookup('env','DEMO') }}"
+      tags:
+        - keepalived
