@@ -58,5 +58,6 @@
       vars:
         init: true
         infodata: "{{ lookup('env','DEMO') }}"
+        keep_pass: "{{ lookup('env', 'KEEPPASS') }}"
       tags:
         - keepalived-vars
