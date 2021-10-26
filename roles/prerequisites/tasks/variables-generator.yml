@@ -12,4 +12,4 @@
     src: k3s_variables.yml.j2
     dest: vars/k3s_variables.yml
   tags:
-    - k3scluster
+    - k3scluster-vars
