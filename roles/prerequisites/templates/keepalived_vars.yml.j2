@@ -24,7 +24,8 @@ keepalived__routers:
       - {{ hostvars[host].ansible_host }}
     {% endif %}
     {% endfor %}
-router_id: 50
+
+    router_id: 50
     vip_addresses:
       - {{ internal_vip }}
 {% endfor %}
