@@ -25,6 +25,9 @@
     - name: 'deploy prerequisites'
       ansible.builtin.include_role:
         name: prerequisites
+      vars:
+        init: true
+        infodata: "{{ lookup('env','DEMO') }}"
       tags:
         - prereq-deploy
 
