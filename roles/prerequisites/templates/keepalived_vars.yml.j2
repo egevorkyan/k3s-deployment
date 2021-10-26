@@ -1,6 +1,6 @@
 keepalived__nonlocal_bind: true
 keepalived__routers:
-{% for host in groups.proxy %}
+{% for host in groups.proxy -%}
   - name: vrrp_{{loop.index}}
     check_script:
       - name: chk_haproxy
@@ -25,4 +25,4 @@ keepalived__routers:
     router_id: 50
     vip_addresses:
       - {{ internal_vip }}
-{% endfor %}
+{%- endfor %}
