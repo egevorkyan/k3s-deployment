@@ -40,7 +40,7 @@
     ifname: "{{ ansible_default_ipv4.interface }}.1"
     vlandev: "{{ ansible_default_ipv4.interface }}"
     vlanid: 1
-    ip4: "{{ internal_network_start | ansible.netcommon.ipmath(node_id) }}/{{ internal_cidr }}"
+    ip4: "{{ internal_network_start | ansible.netcommon.ipmath(server_id) }}/{{ internal_cidr }}"
     autoconnect: true
     state: present
   tags:

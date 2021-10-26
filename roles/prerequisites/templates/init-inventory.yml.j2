@@ -8,4 +8,5 @@ all:
           ansible_host: {{ items.node_ip }}
           ansible_python_interpreter: /usr/bin/python3
           k3s_control_node: true
+          server_id: {{ loop.index }}
   {% endfor %}
