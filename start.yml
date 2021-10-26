@@ -40,7 +40,6 @@
       vars:
         init: true
         infodata: "{{ lookup('env','DEMO') }}"
-      delegate_to: localhost
       tags:
         - keepalived
 
