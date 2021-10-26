@@ -5,7 +5,7 @@
     src: keepalived_vars.yml.j2
     dest: vars/keepalived_vars.yml
   tags:
-    - keepalived
+    - keepalived-vars
 
 - name: 'k3s variables generator'
   ansible.builtin.template:

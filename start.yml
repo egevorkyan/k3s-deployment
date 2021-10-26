@@ -59,4 +59,4 @@
         init: true
         infodata: "{{ lookup('env','DEMO') }}"
       tags:
-        - keepalived
+        - keepalived-vars
