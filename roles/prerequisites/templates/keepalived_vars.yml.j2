@@ -19,9 +19,9 @@ keepalived__routers:
     use_unicast: true
     unicast_src_ip: {{ hostvars[host].ansible_host }}
     unicast_peers:
-{% for host in groups.proxy %}
-{% if hostvars[host].ansible_host != internal_network_start|ansible.netcommon.ipmath(loop.index) %}
-      - {{ hostvars[host].ansible_host }}
+{% for h in groups.proxy %}
+{% if hostvars[h].ansible_host != internal_network_start|ansible.netcommon.ipmath(loop.index) %}
+      - {{ hostvars[h].ansible_host }}
 {% endif %}
 {% endfor %}
     router_id: 50
