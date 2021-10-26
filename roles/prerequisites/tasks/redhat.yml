@@ -1,7 +1,7 @@
 ---
 - name: 'set hostname'
   ansible.builtin.hostname:
-    name: "{{ node_name }}"
+    name: "{{ inventory_hostname }}"
   tags:
     - prereq-deploy
 
