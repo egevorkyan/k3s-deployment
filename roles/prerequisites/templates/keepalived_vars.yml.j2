@@ -20,6 +20,7 @@ keepalived__routers:
     unicast_src_ip: {{ hostvars[host].ansible_host }}
     unicast_peers:
 {% for h in groups.proxy %}
+      {{ internal_network_start|ansible.netcommon.ipmath(loop.index) }}
    {% if hostvars[h].ansible_host != internal_network_start|ansible.netcommon.ipmath(loop.index) %}
       - {{ hostvars[h].ansible_host }}
    {% endif %}
