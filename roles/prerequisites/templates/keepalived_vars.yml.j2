@@ -20,7 +20,7 @@ keepalived__routers:
     unicast_src_ip: {{ hostvars[host].ansible_host }}
     unicast_peers:
 {% for host in groups.proxy %}
-- {{ hostvars[host].ansible_host }}
+      - {{ hostvars[host].ansible_host }}
 {% endfor %}
     router_id: 50
     vip_addresses:
