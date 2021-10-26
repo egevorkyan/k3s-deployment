@@ -2,12 +2,16 @@
 - name: 'set hostname'
   ansible.builtin.hostname:
     name: "{{ node_name }}"
+  tags:
+    - prereq-deploy
 
 - name: 'install packages'
   dnf:
     name: "{{ item }}"
     state: latest
   loop: "{{ packages_redhat }}"
+  tags:
+    - prereq-deploy
 
 - name: 'open firewalld ports'
   firewalld:
@@ -16,6 +20,8 @@
     immediate: yes
     state: "{{ item.state }}"
   loop: "{{ firewall_port_list }}"
+  tags:
+    - prereq-deploy
 
 - name: 'open firewalld rich rules'
   firewalld:
@@ -24,6 +30,8 @@
     immediate: yes
     state: "{{ item.state }}"
   loop: "{{ firewall_rich_rules }}"
+  tags:
+    - prereq-deploy
 
 - name: 'create interface'
   nmcli:
@@ -35,3 +43,5 @@
     ip4: "{{ internal_network_start | ansible.netcommon.ipmath(node_id) }}/{{ internal_cidr }}"
     autoconnect: true
     state: present
+  tags:
+    - prereq-deploy
