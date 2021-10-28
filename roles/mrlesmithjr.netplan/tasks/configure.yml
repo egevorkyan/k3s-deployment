@@ -1,0 +1,16 @@
+---
+- name: Configuring Netplan
+  template:
+    src: etc/netplan/config.yaml.j2
+    dest: "{{ netplan_config_file }}"
+  become: true
+  when: netplan_configuration != [] and onlyvlan == false
+  notify: netplan generate config
+
+- name: Configuring Netplan
+  template:
+    src: etc/netplan/config-changed.yaml.j2
+    dest: "{{ netplan_config_file }}"
+  become: true
+  when: netplan_configuration != [] and onlyvlan == true
+  notify: netplan generate config

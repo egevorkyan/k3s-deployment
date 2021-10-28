@@ -1,0 +1,49 @@
+---
+- name: 'set hostname'
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+  tags:
+    - prereq-deploy
+
+- name: 'install packages'
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ packages_debian }}"
+  tags:
+    - prereq-deploy
+
+- name: 'open ufw ports'
+  community.general.ufw:
+    rule: "{{ item.state }}"
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  loop: "{{ ufw_port_list }}"
+  tags:
+    - prereq-deploy
+
+- name: 'open ufw protocols'
+  community.general.ufw:
+    rule: "{{ item.state }}"
+    proto: "{{ item.proto }}"
+  loop: "{{ ufw_proto_rules }}"
+  tags:
+    - prereq-deploy
+
+- name: 'create interface'
+  ansible.builtin.include_role:
+    name: mrlesmithjr.netplan
+  vars:
+    netplan_configuration:
+      network:
+        version: 2
+        ethernets:
+        vlans:
+          vlan1:
+          accept-ra: no
+          id: 1
+          link: "{{ ansible_default_ipv4.interface }}"
+          addresses:
+            - "{{ internal_network_start | ansible.netcommon.ipmath(server_id) }}/{{ internal_cidr }}"
+  tags:
+    - prereq-deploy

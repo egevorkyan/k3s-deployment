@@ -1,6 +1,8 @@
 internal_network_start: 172.254.254.5/24
 internal_cidr: 24
 internal_vip: 172.254.254.250
+
+#RHEL based OS variables
 packages_redhat:
   - git
   - vim
@@ -50,3 +52,52 @@ firewall_rich_rules:
   - { proto: esp, state: enabled }
   - { proto: 112, state: enabled }
 
+#Debian based OS variables
+packages_debian:
+  - git
+  - vim
+  - net-tools
+  - telnet
+
+ufw_port_list:
+  - { port: 22, proto: tcp, state: allow }
+  - { port: 6443, proto: tcp, state: allow }
+  - { port: 8443, proto: tcp, state: allow }
+  - { port: 8091, proto: tcp, state: allow }
+  - { port: 8090, proto: tcp, state: allow }
+  - { port: 80, proto: tcp, state: allow }
+  - { port: 443, proto: tcp, state: allow }
+  - { port: 53, proto: tcp, state: allow }
+  - { port: 2376, proto: tcp, state: allow }
+  - { port: 2379:2380, proto: tcp, state: allow }
+  - { port: 6641:6642, proto: tcp, state: allow }
+  - { port: 9000:9999, proto: tcp, state: allow }
+  - { port: 10250, proto: tcp, state: allow }
+  - { port: 10254, proto: tcp, state: allow }
+  - { port: 10257, proto: tcp, state: allow }
+  - { port: 10255, proto: tcp, state: allow }
+  - { port: 10252, proto: tcp, state: allow }
+  - { port: 10259, proto: tcp, state: allow }
+  - { port: 22623, proto: tcp, state: allow }
+  - { port: 30000:32767, proto: tcp, state: allow }
+  - { port: 1936, proto: tcp, state: allow }
+  - { port: 3306, proto: tcp, state: allow }
+  - { port: 4567, proto: tcp, state: allow }
+  - { port: 4568, proto: tcp, state: allow }
+  - { port: 4444, proto: tcp, state: allow }
+  - { port: 53, proto: udp, state: allow }
+  - { port: 500, proto: udp, state: allow }
+  - { port: 8472, proto: udp, state: allow }
+  - { port: 4500, proto: udp, state: allow }
+  - { port: 4789, proto: udp, state: allow }
+  - { port: 5353, proto: udp, state: allow }
+  - { port: 6081, proto: udp, state: allow }
+  - { port: 8472, proto: udp, state: allow }
+  - { port: 9000:9999, proto: udp, state: allow }
+  - { port: 30000-32767, proto: udp, state: allow }
+  - { port: 4567, proto: udp, state: allow }
+
+ufw_proto_rules:
+  - { proto: ah, state: allow }
+  - { proto: esp, state: allow }
+  - { proto: 112, state: allow }

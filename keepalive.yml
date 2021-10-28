@@ -1,8 +1,0 @@
----
-- hosts: proxy
-  become: true
-  gather_facts: yes
-  vars_files:
-    - vars/keepalived_vars.yml
-  roles:
-     - { role: sparknsh.keepalived }

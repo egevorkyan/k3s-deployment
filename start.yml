@@ -28,6 +28,7 @@
       vars:
         init: true
         infodata: "{{ lookup('env','DEMO') }}"
+        onlyvlan: true
       tags:
         - prereq-deploy
 
