@@ -94,7 +94,7 @@ ufw_port_list:
   - { port: 6081, proto: udp, state: allow }
   - { port: 8472, proto: udp, state: allow }
   - { port: 9000:9999, proto: udp, state: allow }
-  - { port: 30000-32767, proto: udp, state: allow }
+  - { port: 30000:32767, proto: udp, state: allow }
   - { port: 4567, proto: udp, state: allow }
 
 ufw_proto_rules:
