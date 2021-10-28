@@ -100,4 +100,4 @@ ufw_port_list:
 ufw_proto_rules:
   - { proto: ah, state: allow }
   - { proto: esp, state: allow }
-  - { proto: 112, state: allow }
+  - { proto: vrrp, state: allow }
