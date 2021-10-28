@@ -1,5 +1,5 @@
 #Managed by Ansible
 127.0.0.1 localhost
 {% for items in infodata %}
-{{ internal_network_start | ansible.netcommon.ipmath(loop.index) }} {{ items.node_name }}
+{{ internal_network_start | ansible.netcommon.ipmath(loop.index) }} {{ items.host_name }}
 {% endfor %}
