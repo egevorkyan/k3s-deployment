@@ -43,11 +43,5 @@
         version: 2
         ethernets:
         vlans:
-          vlan1:
-          accept-ra: no
-          id: 1
-          link: "{{ ansible_default_ipv4.interface }}"
-          addresses:
-            - "{{ internal_network_start | ansible.netcommon.ipmath(server_id) }}/{{ internal_cidr }}"
   tags:
     - prereq-deploy

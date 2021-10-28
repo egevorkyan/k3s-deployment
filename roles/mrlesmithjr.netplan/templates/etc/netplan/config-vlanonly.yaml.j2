@@ -23,5 +23,10 @@ network:
 {% endif %}
 {% if netplan_configuration['network']['vlans'] is defined %}
   vlans:
-{{ netplan_configuration['network']['vlans']|to_nice_yaml|indent(4, true) }}
+    {{ ansible_default_ipv4.interface }}.1:
+       accept-ra: no
+       id: 1
+       link: "{{ ansible_default_ipv4.interface }}"
+       addresses:
+         - "{{ internal_network_start | ansible.netcommon.ipmath(server_id) }}/{{ internal_cidr }}"
 {% endif %}

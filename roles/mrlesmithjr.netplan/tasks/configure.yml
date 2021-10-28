@@ -9,7 +9,7 @@
 
 - name: Configuring Netplan
   template:
-    src: etc/netplan/config-changed.yaml.j2
+    src: etc/netplan/config-vlanonly.yaml.j2
     dest: "{{ netplan_config_file }}"
   become: true
   when: netplan_configuration != [] and onlyvlan == true
