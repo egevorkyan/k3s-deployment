@@ -30,6 +30,10 @@
   tags:
     - prereq-deploy
 
+- name: 'activate ufw'
+  community.general.ufw:
+    state: enabled
+
 - name: 'create interface'
   ansible.builtin.include_role:
     name: mrlesmithjr.netplan
