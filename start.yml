@@ -28,7 +28,19 @@
       vars:
         init: true
         infodata: "{{ lookup('env','DEMO') }}"
+      tags:
+        - prereq-deploy
+    - name: 'create interface'
+      ansible.builtin.include_role:
+        name: prerequisites
+        tasks_from: netplan_use
+      vars:
         onlyvlan: true
+        netplan_configuration:
+          network:
+            version: 2
+            ethernets:
+            vlans:
       tags:
         - prereq-deploy
 

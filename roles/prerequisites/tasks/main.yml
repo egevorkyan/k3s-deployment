@@ -8,6 +8,7 @@
     group: root
   tags:
     - prereq-deploy
+
 - name: 'install prerequisites'
   include_tasks: "{{ ansible_facts['os_family'] | lower }}.yml"
   tags:

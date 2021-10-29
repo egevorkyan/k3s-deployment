@@ -43,13 +43,3 @@
     state: enabled
   tags:
     - prereq-deploy
-
-- name: 'create interface'
-  ansible.builtin.include_role:
-    name: mrlesmithjr.netplan
-  vars:
-    netplan_configuration:
-      network:
-        version: 2
-        ethernets:
-        vlans:
