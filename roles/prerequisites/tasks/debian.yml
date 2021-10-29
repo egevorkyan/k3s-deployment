@@ -43,3 +43,9 @@
     state: enabled
   tags:
     - prereq-deploy
+
+- name: 'create vlan interface'
+  import_tasks: netplan.yml
+  when: netplan_enabled
+  tags:
+    - prereq-deploy
