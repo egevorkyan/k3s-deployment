@@ -30,9 +30,19 @@
   tags:
     - prereq-deploy
 
+- name: 'open ufw vrrp'
+  community.general.ufw:
+    rule: "{{ item.state }}"
+    to_ip: "{{ item.proto }}"
+  loop: "{{ ufw_multicast_vrrp_list }}"
+  tags:
+    - prereq-deploy
+
 - name: 'activate ufw'
   community.general.ufw:
     state: enabled
+  tags:
+    - prereq-deploy
 
 - name: 'create interface'
   ansible.builtin.include_role:
@@ -43,5 +53,3 @@
         version: 2
         ethernets:
         vlans:
-  tags:
-    - prereq-deploy
