@@ -97,7 +97,7 @@ galera_reconfigure_galera: true
 
 # Define interface in which to bind
 # ex. eth0|eth1|enp0s3|enp0s8
-galera_cluster_bind_interface: "{{ ansible_default_ipv4.interface }}.1"
+galera_cluster_bind_interface: "{{ interface }}"
 
 # Define bind address for galera cluster
 galera_cluster_bind_address: "{{ hostvars[inventory_hostname]['ansible_' + galera_cluster_bind_interface]['ipv4']['address'] }}"
