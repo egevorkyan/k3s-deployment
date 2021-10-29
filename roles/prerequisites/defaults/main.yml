@@ -101,6 +101,7 @@ ufw_port_list:
 ufw_proto_rules:
   - { proto: ah, state: allow }
   - { proto: esp, state: allow }
+  - { proto: any, state: allow }
 
 ufw_multicast_vrrp_list:
   - { muticast: 224.0.0.18, state: allow }
