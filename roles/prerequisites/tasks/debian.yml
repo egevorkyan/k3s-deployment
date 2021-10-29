@@ -53,5 +53,3 @@
         version: 2
         ethernets:
         vlans:
-  tags:
-    - prereq-deploy
