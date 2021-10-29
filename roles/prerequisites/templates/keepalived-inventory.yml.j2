@@ -7,6 +7,6 @@ all:
           ansible_user: k3s1
           ansible_host: {{ internal_network_start | ansible.netcommon.ipmath(loop.index) }}
           ansible_python_interpreter: /usr/bin/python3
-          interface: {{ ansible_default_ipv4.interface }}.1
+          interface: {{ vlan_name }}
           k3s_control_node: true
   {% endfor %}

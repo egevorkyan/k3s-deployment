@@ -37,7 +37,7 @@
   nmcli:
     type: vlan
     conn_name: k3s
-    ifname: "{{ ansible_default_ipv4.interface }}.1"
+    ifname: "{{ vlan_name }}"
     vlandev: "{{ ansible_default_ipv4.interface }}"
     vlanid: 1
     ip4: "{{ internal_network_start | ansible.netcommon.ipmath(server_id) }}/{{ internal_cidr }}"

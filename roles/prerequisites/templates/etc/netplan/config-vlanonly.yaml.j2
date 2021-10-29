@@ -23,7 +23,7 @@ network:
 {% endif %}
 {% if netplan_configuration['network']['vlans'] is defined %}
   vlans:
-    {{ ansible_default_ipv4.interface }}.1:
+    {{ vlan_name }}:
        accept-ra: no
        id: 1
        link: "{{ ansible_default_ipv4.interface }}"

@@ -8,7 +8,7 @@ keepalived__routers:
         weight: 2
         fall: 1
         rise: 1
-    #vip_int: "{{ interface }}"
+    vip_int: (( vlan_name ))
     master_node: (( groups.proxy | first ))
     router_pri_master: 150
     router_pri_backup: 100

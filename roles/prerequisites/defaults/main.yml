@@ -2,7 +2,7 @@ internal_network: 172.254.254.0/24
 internal_network_start: 172.254.254.5/24
 internal_cidr: 24
 internal_vip: 172.254.254.250
-
+vlan_name: k3s
 #RHEL based OS variables
 packages_redhat:
   - git
