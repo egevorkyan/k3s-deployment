@@ -4,6 +4,8 @@
   ansible.builtin.template:
     src: keepalived_vars.yml.j2
     dest: vars/keepalived_vars.yml
+    variable_start_string: "(("
+    variable_end_string: "))"
   tags:
     - keepalived-vars
 
