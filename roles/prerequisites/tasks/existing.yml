@@ -4,9 +4,13 @@
     paths: /etc/netplan
     patterns: "*.yml,*.yaml"
   register: _netplan_configs
+  tags:
+    - prereq-deploy
 
 - debug: var=_netplan_configs
   when: debug is defined and ( debug | bool )
+  tags:
+    - prereq-deploy
 
 - name: Removing Existing Configurations
   file:
@@ -17,3 +21,5 @@
   when:
     - item['path'] != netplan_config_file
     - netplan_configuration != []
+  tags:
+    - prereq-deploy

@@ -4,9 +4,13 @@
   listen: netplan generate config
   notify: netplan apply config
   become: true
+  tags:
+    - prereq-deploy
 
 - name: Applying Netplan Configuration
   command: netplan apply
   listen: netplan apply config
   become: true
   when: netplan_apply
+  tags:
+    - prereq-deploy

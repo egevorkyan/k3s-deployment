@@ -6,6 +6,8 @@
   become: true
   when: netplan_configuration != [] and onlyvlan == false
   notify: netplan generate config
+  tags:
+    - prereq-deploy
 
 - name: Configuring Netplan
   template:
@@ -14,3 +16,5 @@
   become: true
   when: netplan_configuration != [] and onlyvlan == true
   notify: netplan generate config
+  tags:
+    - prereq-deploy
