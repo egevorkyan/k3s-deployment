@@ -14,15 +14,7 @@ keepalived__routers:
     router_pri_backup: 100
     advert_int: 1
     nopreempt: true
-    auth_pass: {{ keep_pass }}
-    use_unicast: true
-    unicast_src_ip: {{ ansible_host }}
-    unicast_peers:
-{% for h in groups.proxy%}
-{% if hostvars[h].ansible_host != internal_network_start|ansible.netcommon.ipmath(loop.index) %}
-      - (( hostvars[h].ansible_host ))
-{% endif %}
-{% endfor %}
+    auth_pass: (( keep_pass ))
     router_id: 50
     vip_addresses:
       - (( internal_vip ))
