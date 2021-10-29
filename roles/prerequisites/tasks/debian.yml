@@ -33,7 +33,7 @@
 - name: 'open ufw vrrp'
   community.general.ufw:
     rule: "{{ item.state }}"
-    to_ip: "{{ item.proto }}"
+    to_ip: "{{ item.muticast }}"
   loop: "{{ ufw_multicast_vrrp_list }}"
   tags:
     - prereq-deploy
