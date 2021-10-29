@@ -10,7 +10,7 @@ keepalived__routers:
         fall: 1
         rise: 1
     vip_int: {{ hostvars[host].interface }}
-    master_node: k3s1
+    master_node: {{ inventory_hostname }}
     router_pri_master: 150
     router_pri_backup: 100
     advert_int: 1
