@@ -42,7 +42,6 @@
       ansible.builtin.include_role:
         name: prerequisites
       vars:
-        init: true
         infodata: "{{ lookup('env','ART_HOST_INFO') }}"
         onlyvlan: true
         netplan_configuration:
@@ -65,7 +64,6 @@
       ansible.builtin.include_role:
         name: eradical.ansible_mariadb_galera_cluster
       vars:
-        init: true
         infodata: "{{ lookup('env','ART_HOST_INFO') }}"
         keep_pass: "{{ lookup('env', 'KEEPPASS') }}"
         mariadb_version: "{{ lookup('env', 'MARIADB_VERSION') }}"
@@ -83,12 +81,14 @@
   become: true
   vars_files:
     - vars/keepalived_vars.yml
-  roles:
-    - role: sparknsh.keepalived
   tags:
     - keepalived-deployment
-  when:
-    - k3s_control_node
+  tasks:
+    - name: 'keepalived deployment'
+      ansible.builtin.include_role:
+        name: sparknsh.keepalived
+      when:
+        - k3s_control_node
 
 - name: 'k3s ha cluster deployment - external kvdb'
   hosts: k3s_cluster
