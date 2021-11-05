@@ -9,7 +9,7 @@ keepalived__routers:
         fall: 1
         rise: 1
     vip_int: {{ vlan_name }}
-    master_node: {{ groups.proxy | first }}
+    master_node: {{ infodata[0].host_name }}
     router_pri_master: 150
     router_pri_backup: 100
     advert_int: 1
