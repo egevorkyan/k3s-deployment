@@ -4,7 +4,7 @@ all:
       hosts:
   {% for items in infodata %}
       {{ items.host_name }}:
-          ansible_user: k3s1
+          ansible_user: pilot
           ansible_host: {{ items.host_ip }}
           ansible_python_interpreter: /usr/bin/python3
           server_id: {{ loop.index }}

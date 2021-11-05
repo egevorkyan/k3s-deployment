@@ -3,47 +3,64 @@
 input:
   var:
     - name: ART_HOST_INFO
+      required: true
+      description: |-
+        Host information provider
 
-env:
-  DEMO: '[{"host_name": "k3s1", "host_ip": "172.22.22.23"}, {"host_name": "k3s2", "host_ip": "172.22.22.24"}, {"host_name": "k3s3", "host_ip": "172.22.22.25"}]'
-  MARIADB_VERSION: 10.5
-  MARIADB_DBNAME: k3sdb
-  MARIADB_USER: admin
-  MARIADB_PASSWORD: Cisco2013
-  MARIADB_PRI_DOMAIN: example.com
-  K3SVERSION: v1.22.2+k3s2
+    - name: MARIADB_VERSION
+      required: true
+      default: "10.5"
+      description: |-
+        MariaDB version
+
+    - name: MARIADB_DBNAME
+      required: true
+      default: "k3sdb"
+      description: |-
+        MariaDB name for K3S
+
+    - name: MARIADB_USER
+      required: true
+      default: "k3sadmin"
+      description: |-
+        MariaDB user to manage and access K3S database
+
+    - name: MARIADB_PRI_DOMAIN
+      required: true
+      default: "example.com"
+      description: |-
+        MariaDB primary domain name
+
+    - name: K3SVERSION
+      required: true
+      default: "v1.22.2+k3s2"
+      description: |-
+        K3S version
+
+  secret:
+    - name: MARIADB_PASSWORD
+      required: true
+      description: |-
+        MariaDB user password
 
 functions:
-  - name: generate-inventories
-    description: Generates inventory files
+  - name: setup-k3s-infra
+    description: deploys k3s infrastructure
+    runtime: quay.io/artisan/ubi-min
+    export: true
     run:
       - ansible-playbook start.yml -t init,k3scluster,keepalived,k3scluster-vars
-
-  - name: deploy-required-configuration
-    description: Deploys applications, internal network and ufw hardening
-    run:
       - ansible-playbook start.yml -i init-inventory.yml -t prereq-deploy
-
-  - name: deploy-mariadb-galera-cluster
-    description: Deploy MariaDB Galera cluster
-    run:
       - ansible-playbook start.yml -i k3scluster-inventory.yml -t mariadb
-
-  - name: deploy-keepalived
-    description: Deploy Keepalived
-    run:
       - ansible-playbook start.yml -i keepalived-inventory.yml -t keepalived-deployment
-
-  - name: deploy-k3scluster
-    description: Deploy K3s cluster using external KVDB (MariaDB Galera Cluster)
-    run:
       - ansible-playbook start.yml -i k3scluster-inventory.yml -t k3s-deployment
-
-  - name: deploy-start
-    description: Full Lifecicle
-    run:
-      - $(generate-inventories)
-      - $(deploy-required-configuration)
-      - $(deploy-mariadb-galera-cluster)
-      - $(deploy-keepalived)
-      - $(deploy-k3scluster)
+    input:
+      var:
+        - ART_HOST_INFO
+        - MARIADB_VERSION
+        - MARIADB_DBNAME
+        - MARIADB_USER
+        - MARIADB_PRI_DOMAIN
+        - K3SVERSION
+      secret:
+        - MARIADB_PASSWORD

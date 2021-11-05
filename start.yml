@@ -10,7 +10,7 @@
         name: prerequisites
         tasks_from: inventory-generator
       vars:
-        infodata: "{{ lookup('env','DEMO') }}"
+        infodata: "{{ lookup('env','ART_HOST_INFO') }}"
       tags:
         - init
         - k3scluster
@@ -21,7 +21,7 @@
         name: prerequisites
         tasks_from: variables-generator
       vars:
-        infodata: "{{ lookup('env','DEMO') }}"
+        infodata: "{{ lookup('env','ART_HOST_INFO') }}"
         keep_pass: "{{ lookup('env', 'KEEPPASS') }}"
         mariadb_version: "{{ lookup('env', 'MARIADB_VERSION') }}"
         mariadb_dbname: "{{ lookup('env', 'MARIADB_DBNAME') }}"
@@ -43,7 +43,7 @@
         name: prerequisites
       vars:
         init: true
-        infodata: "{{ lookup('env','DEMO') }}"
+        infodata: "{{ lookup('env','ART_HOST_INFO') }}"
         onlyvlan: true
         netplan_configuration:
           network:
@@ -66,7 +66,7 @@
         name: eradical.ansible_mariadb_galera_cluster
       vars:
         init: true
-        infodata: "{{ lookup('env','DEMO') }}"
+        infodata: "{{ lookup('env','ART_HOST_INFO') }}"
         keep_pass: "{{ lookup('env', 'KEEPPASS') }}"
         mariadb_version: "{{ lookup('env', 'MARIADB_VERSION') }}"
         mariadb_dbname: "{{ lookup('env', 'MARIADB_DBNAME') }}"

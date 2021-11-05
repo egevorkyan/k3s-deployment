@@ -4,7 +4,7 @@ all:
       hosts:
   {% for items in infodata %}
       {{ items.host_name }}:
-          ansible_user: k3s1
+          ansible_user: pilot
           ansible_host: {{ internal_network_start | ansible.netcommon.ipmath(loop.index) }}
           ansible_python_interpreter: /usr/bin/python3
   {% if loop.index > 3 %}
