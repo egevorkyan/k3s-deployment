@@ -19,7 +19,7 @@
     - name: 'k3s variables'
       ansible.builtin.include_role:
         name: prerequisites
-          tasks_from: variables-generator
+        tasks_from: variables-generator
       vars:
         infodata: "{{ lookup('env','DEMO') }}"
         keep_pass: "{{ lookup('env', 'KEEPPASS') }}"
