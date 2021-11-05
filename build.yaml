@@ -9,20 +9,15 @@ env:
   MARIADB_PRI_DOMAIN: example.com
   K3SVERSION: v1.22.2+k3s2
 
-- name: generate-init-inventory
-  description: Generates initial inventory file
+- name: generate-inventories
+  description: Generates inventory files
   run:
-    - ansible-playbook start.yml -t init,k3scluster
+    - ansible-playbook start.yml -t init,k3scluster,keepalived
 
 - name: deploy-required-configuration
   description: Deploys applications, internal network and ufw hardening
   run:
     - ansible-playbook start.yml -i init-inventory.yml -t prereq-deploy
-
-- name: generate-keepalived-inventory
-  description: Generates keepalived environment
-  run:
-    - ansible-playbook start.yml -i init-inventory.yml -t keepalived
 
 - name: generate-keepalived-variables
   description: Generates keepalived variables
