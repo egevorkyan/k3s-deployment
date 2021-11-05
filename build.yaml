@@ -12,12 +12,12 @@ functions:
   - name: package
     description: creates the package containing automation for remote host execution
     run:
-      - art build -t nexus-nexus.apps.demo.openshiftdev.com/k3s/k3sinfra
+      - art build -t artisan-registry-nexus.apps.demo.openshiftdev.com/k3s/k3sinfra
 
   - name: push
     description: pushes the latest package
     run:
-      - art push -u admin:${REG_PWD} nexus-nexus.apps.demo.openshiftdev.com/k3s/k3sinfra
+      - art push -u admin:${REG_PWD} artisan-registry-nexus.apps.demo.openshiftdev.com/k3s/k3sinfra
     input:
       secret:
         - REG_PWD
