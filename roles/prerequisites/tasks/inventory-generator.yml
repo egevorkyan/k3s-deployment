@@ -12,7 +12,6 @@
   ansible.builtin.template:
     src: keepalived-inventory.yml.j2
     dest: keepalived-inventory.yml
-  delegate_to: localhost
   tags:
     - keepalived
 
