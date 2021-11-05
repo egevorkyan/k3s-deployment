@@ -1,0 +1,67 @@
+---
+
+input:
+  var:
+    - name: ART_HOST_INFO
+      required: true
+      description: |-
+        Host information provider
+
+    - name: MARIADB_VERSION
+      required: true
+      default: "10.5"
+      description: |-
+        MariaDB version
+
+    - name: MARIADB_DBNAME
+      required: true
+      default: "k3sdb"
+      description: |-
+        MariaDB name for K3S
+
+    - name: MARIADB_USER
+      required: true
+      default: "k3sadmin"
+      description: |-
+        MariaDB user to manage and access K3S database
+
+    - name: MARIADB_PRI_DOMAIN
+      required: true
+      default: "example.com"
+      description: |-
+        MariaDB primary domain name
+
+    - name: K3SVERSION
+      required: true
+      default: "v1.22.2+k3s2"
+      description: |-
+        K3S version
+
+  secret:
+    - name: MARIADB_PASSWORD
+      required: true
+      description: |-
+        MariaDB user password
+
+functions:
+  - name: setup-k3s-infra
+    description: deploys k3s infrastructure
+    runtime: quay.io/artisan/ubi-min
+    export: true
+    run:
+      - ansible-playbook start.yml -t init,k3scluster,keepalived,k3scluster-vars
+      - ansible-playbook start.yml -i init-inventory.yml -t prereq-deploy
+      - ansible-playbook start.yml -i k3scluster-inventory.yml -t mariadb
+      - ansible-playbook start.yml -i keepalived-inventory.yml -t keepalived-deployment
+      - ansible-playbook start.yml -i k3scluster-inventory.yml -t k3s-deployment
+    input:
+      var:
+        - ART_HOST_INFO
+        - MARIADB_VERSION
+        - MARIADB_DBNAME
+        - MARIADB_USER
+        - MARIADB_PRI_DOMAIN
+        - K3SVERSION
+      secret:
+        - MARIADB_PASSWORD
+...

@@ -38,7 +38,7 @@ None
 
 ## Example Playbook
 
-[Example playbook](./playbook.yml)
+[Example playbook](playbook.yml)
 
 ## Update the root password
 
