@@ -52,7 +52,7 @@
       tags:
         - keepalived
       when:
-        - k3s_control_node
+        - k3s_control_node is true
 
 - name: 'generate keepalived variables'
   hosts: localhost
