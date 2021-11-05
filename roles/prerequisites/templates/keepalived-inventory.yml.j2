@@ -2,7 +2,7 @@ all:
   children:
     proxy:
       hosts:
-{% for items in infodata -%}
+ {% for items in infodata %}
       {{ items.host_name }}:
           ansible_user: k3s1
           ansible_host: {{ internal_network_start | ansible.netcommon.ipmath(loop.index) }}
@@ -13,4 +13,4 @@ all:
   {% else %}
         k3s_control_node: true
   {% endif %}
-{%- endfor %}
+ {% endfor %}
