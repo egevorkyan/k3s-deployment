@@ -18,7 +18,7 @@ functions:
     description: pushes the latest package
     run:
       - art push -u admin:${REG_PWD} nexus-nexus.apps.demo.openshiftdev.com/k3s/k3sinfra
-      input:
-        secret:
-          - REG_PWD
+    input:
+      secret:
+        - REG_PWD
 ...
