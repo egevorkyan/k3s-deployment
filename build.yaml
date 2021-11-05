@@ -12,7 +12,7 @@ env:
 - name: generate-inventories
   description: Generates inventory files
   run:
-    - ansible-playbook start.yml -t init,k3scluster,keepalived
+    - ansible-playbook start.yml -t init,k3scluster,keepalived,k3scluster-vars
 
 - name: deploy-required-configuration
   description: Deploys applications, internal network and ufw hardening
@@ -23,11 +23,6 @@ env:
   description: Generates keepalived variables
   run:
     - ansible-playbook start.yml -i keepalived-inventory.yml -t keepalived-vars
-
-- name: generate-k3scluster-variables
-  description: Generate k3scluster variables
-  run:
-    - ansible-playbook start.yml -t k3scluster-vars
 
 - name: deploy-mariadb-galera-cluster
   description: Deploy MariaDB Galera cluster

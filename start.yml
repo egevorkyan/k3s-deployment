@@ -1,6 +1,6 @@
 ---
 
-- name: 'generate initial, k3scluster and keepalived inventories'
+- name: 'generate initial, k3scluster and keepalived inventories, generate required variables'
   hosts: localhost
   connection: local
   gather_facts: no
@@ -16,7 +16,7 @@
         - k3scluster
         - keepalived
 
-    - name: 'k3s variables'
+    - name: 'k3s and keepalived variables'
       ansible.builtin.include_role:
         name: prerequisites
         tasks_from: variables-generator
@@ -31,6 +31,7 @@
         k3s_version: "{{ lookup('env', 'K3SVERSION') }}"
       tags:
         - k3scluster-vars
+        - keepalived-vars
 
 - name: 'deploy prerequisites'
   hosts: initial
@@ -51,44 +52,6 @@
             vlans:
       tags:
         - prereq-deploy
-
-- name: 'generate keepalived variables'
-  hosts: localhost
-  connection: local
-  gather_facts: no
-  tasks:
-    - name: 'keepalived variables'
-      ansible.builtin.include_role:
-        name: prerequisites
-        tasks_from: variables-generator
-      vars:
-        init: true
-        infodata: "{{ lookup('env','DEMO') }}"
-        keep_pass: "{{ lookup('env', 'KEEPPASS') }}"
-      tags:
-        - keepalived-vars
-
-- name: 'generate k3s variables'
-  hosts: localhost
-  connection: local
-  gather_facts: no
-  tasks:
-    - name: 'k3s variables'
-      ansible.builtin.include_role:
-        name: prerequisites
-        tasks_from: variables-generator
-      vars:
-        init: true
-        infodata: "{{ lookup('env','DEMO') }}"
-        keep_pass: "{{ lookup('env', 'KEEPPASS') }}"
-        mariadb_version: "{{ lookup('env', 'MARIADB_VERSION') }}"
-        mariadb_dbname: "{{ lookup('env', 'MARIADB_DBNAME') }}"
-        mariadb_user: "{{ lookup('env', 'MARIADB_USER') }}"
-        mariadb_password: "{{ lookup('env', 'MARIADB_PASSWORD') }}"
-        mariadb_pri_domain: "{{ lookup('env', 'MARIADB_PRI_DOMAIN') }}"
-        k3s_version: "{{ lookup('env', 'K3SVERSION') }}"
-      tags:
-        - k3scluster-vars
 
 - name: 'mariadb cluster deployment'
   hosts: k3s_cluster
