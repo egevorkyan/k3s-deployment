@@ -7,10 +7,10 @@ all:
           ansible_user: k3s1
           ansible_host: {{ internal_network_start | ansible.netcommon.ipmath(loop.index) }}
           ansible_python_interpreter: /usr/bin/python3
-    {% if loop.index > 3 %}
+  {% if loop.index > 3 %}
           k3s_control_node: false
-    {% else %}
+  {% else %}
           k3s_control_node: true
-    {% endif %}
+  {% endif %}
           interface: {{ vlan_name }}
   {% endfor %}
