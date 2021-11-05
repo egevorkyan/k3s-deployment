@@ -51,6 +51,8 @@
         infodata: "{{ lookup('env','DEMO') }}"
       tags:
         - keepalived
+      when:
+        - k3s_control_node
 
 - name: 'generate keepalived variables'
   hosts: localhost
@@ -111,6 +113,8 @@
         mariadb_password: "{{ lookup('env', 'MARIADB_PASSWORD') }}"
         mariadb_pri_domain: "{{ lookup('env', 'MARIADB_PRI_DOMAIN') }}"
         k3s_version: "{{ lookup('env', 'K3SVERSION') }}"
+      when:
+        - k3s_control_node
 
 - name: 'keepalived deployment'
   hosts: proxy
