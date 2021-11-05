@@ -87,6 +87,8 @@
     - role: sparknsh.keepalived
   tags:
     - keepalived-deployment
+  when:
+    - k3s_control_node
 
 - name: 'k3s ha cluster deployment - external kvdb'
   hosts: k3s_cluster
