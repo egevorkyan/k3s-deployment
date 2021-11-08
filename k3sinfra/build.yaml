@@ -49,7 +49,7 @@ functions:
     runtime: quay.io/artisan/ubi-min
     export: true
     run:
-      - export
+      - bash -c export
       - ansible-playbook start.yml -t init,k3scluster,keepalived,k3scluster-vars
       - ansible-playbook start.yml -i init-inventory.yml -t prereq-deploy
       - ansible-playbook start.yml -i k3scluster-inventory.yml -t mariadb
