@@ -3,22 +3,38 @@ profiles:
   - name: k3sinfra
     target: ./k3sinfra
 
+env:
+  PKG_NAME: aps/k3s-deploy
+
 input:
+  var:
+    - name: REG
+      description: Artisan registry url
+
+    - name: REG_USER
+      description: Artisan registry user
+
   secret:
-    - name: REG_PWD
+    - name: REG_PASS
       description: Registry password
 
 functions:
   - name: package
     description: creates the package containing automation for remote host execution
     run:
-      - art build -t artisan-registry-nexus.apps.demo.openshiftdev.com/k3s/k3sinfra
+      - art build -t ${REG}/${PKG_NAME}
+    input:
+      var:
+        - REG
 
   - name: push
     description: pushes the latest package
     run:
-      - art push -u admin:${REG_PWD} artisan-registry-nexus.apps.demo.openshiftdev.com/k3s/k3sinfra
+      - art push -u ${REG_USER}:${REG_PASS} ${REG}/${PKG_NAME}
     input:
+      var:
+        - REG
+        - REG_USER
       secret:
-        - REG_PWD
+        - REG_PASS
 ...
