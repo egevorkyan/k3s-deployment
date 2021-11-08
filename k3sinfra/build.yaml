@@ -9,31 +9,31 @@ input:
 
     - name: MARIADB_VERSION
       required: true
-      default: "10.5"
+      default: 10.5
       description: |-
         MariaDB version
 
     - name: MARIADB_DBNAME
       required: true
-      default: "k3sdb"
+      default: k3sdb
       description: |-
         MariaDB name for K3S
 
     - name: MARIADB_USER
       required: true
-      default: "k3sadmin"
+      default: k3sadmin
       description: |-
         MariaDB user to manage and access K3S database
 
     - name: MARIADB_PRI_DOMAIN
       required: true
-      default: "example.com"
+      default: example.com
       description: |-
         MariaDB primary domain name
 
     - name: K3SVERSION
       required: true
-      default: "v1.22.2+k3s2"
+      default: v1.22.2+k3s2
       description: |-
         K3S version
 
@@ -42,6 +42,11 @@ input:
       required: true
       description: |-
         MariaDB user password
+
+    - name: KEEPPASS
+      required: true
+      description: |-
+        Keepalived password
 
 functions:
   - name: setup-k3s-infra
@@ -64,4 +69,5 @@ functions:
         - K3SVERSION
       secret:
         - MARIADB_PASSWORD
+        - KEEPPASS
 ...
